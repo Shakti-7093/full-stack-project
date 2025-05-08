@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     otp: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: true,
     },
     otpExpiresAt: {
@@ -53,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
     isVerified: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
-    },
+    }
   }, {
     sequelize,
     modelName: 'User',

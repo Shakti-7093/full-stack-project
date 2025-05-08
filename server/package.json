@@ -8,12 +8,14 @@
     "migrate": "npx sequelize-cli db:migrate",
     "migrate:undo": "npx sequelize-cli db:migrate:undo",
     "migrate:seed:all": "npx sequelize-cli db:seed:all",
-    "migrate:seed:undo": "npx sequelize-cli db:seed:undo"
+    "migrate:seed:undo": "npx sequelize-cli db:seed:undo",
+    "start": "nodemon src/index.js --watch src --ext js"
   },
   "author": "Shakti singh chundawat",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "express-validator": "^7.2.1",
