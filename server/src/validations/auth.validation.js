@@ -11,3 +11,12 @@ exports.loginValidation = [
     body("email").isEmail().withMessage("Valid email is required"),
     body("password").notEmpty().withMessage("Password is required"),
 ];
+
+exports.verifyOtpValidation = [
+    body("email").isEmail().withMessage("Valid email is required"),
+    body("otp").notEmpty().withMessage("OTP is required"),
+];
+
+exports.resendOtpValidation = [
+    body("email").isEmail().withMessage("Valid email is required"),
+];

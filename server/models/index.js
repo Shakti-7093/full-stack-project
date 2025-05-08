@@ -1,30 +1,28 @@
-const Sequelize = require('sequelize');
 const fs = require('fs');
 const path = require('path');
+const Sequelize = require('sequelize');
 const config = require('../config/config');
-const { database, username, password, host, dialect } = config[process.env.NODE_ENV || 'development'];
+const env = process.env.NODE_ENV || 'development';
+const dbConfig = config[env];
 
-const sequelize = new Sequelize(database, username, password, {
-  host,
-  dialect,
-  logging: process.env.NODE_ENV === 'development',
-  define: {
-    freezeTableName: true,
-  },
-});
+const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig);
 
-const models = {};
-const modelFiles = fs.readdirSync(__dirname).filter((file) => file !== 'index.js');
+const db = {};
 
-modelFiles.forEach((file) => {
-  const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-  models[model.name] = model;
-});
+fs.readdirSync(__dirname)
+  .filter(file => file !== 'index.js' && file.endsWith('.js'))
+  .forEach(file => {
+    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+    db[model.name] = model;
+  });
 
-Object.keys(models).forEach((modelName) => {
-  if (models[modelName].associate) {
-    models[modelName].associate(models);
+Object.keys(db).forEach(modelName => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
   }
 });
 
-module.exports = { sequelize, Sequelize, models };
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+
+module.exports = db;
